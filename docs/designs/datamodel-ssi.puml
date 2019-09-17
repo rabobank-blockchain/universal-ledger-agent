@@ -1,0 +1,39 @@
+@startuml ssi
+object Attestor
+object Transaction
+object Attestation
+
+skinparam roundcorner 20
+hide empty members
+
+Attestor -right-|> Transaction
+Transaction --|> Attestation
+Attestor --|> Attestation
+
+Attestor : name: string
+Attestor : icon: string
+Attestor : pubKey: string
+Attestor : datetime: Date | string
+Attestor : transactions?: ITransaction[]
+Attestor : receivedAttestations?: IAttestation[]
+Attestor : issuedAttestations?: IAttestation[]
+
+Transaction : uuid?: string
+Transaction : attestorPubKey: string
+Transaction : datetime: Date | string
+Transaction : attest: IAttestation[]
+Transaction : revoke: IAttestation[]
+Transaction : verifyRequest: IAttestation[]
+Transaction : state?: string
+Transaction : error?: string
+
+Attestation : uuid?: string
+Attestation : attestorPubKey: string
+Attestation : forPubKey?: string
+Attestation : context: string[]
+Attestation : type: string[]
+Attestation : expires?: Date | string
+Attestation : datetime: Date | string
+Attestation : statements: any
+
+@enduml

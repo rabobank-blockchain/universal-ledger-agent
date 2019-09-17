@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- 8
+- 10
+- 11
+- 12
+before_script:
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
+script:
+- npm run compile
+- npm run lint
+- npm run test
+- npm run stryker
+after_script:
+- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"

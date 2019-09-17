@@ -1,0 +1,7 @@
+component.browserified.js
+node_modules/
+.idea/
+coverage/
+.nyc_output/
+.stryker-tmp/
+reports/

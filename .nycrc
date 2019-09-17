@@ -1,0 +1,10 @@
+{
+  "extension": [".ts", ".js"],
+  "reporter": ["text", "cobertura", "lcovonly", "html"],
+  "include": "src",
+  "all": true,
+  "sourceMap": true,
+  "instrument": true,
+  "cache": true,
+  "report-dir": "./coverage"
+}

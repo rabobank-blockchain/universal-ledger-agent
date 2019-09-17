@@ -1,0 +1,76 @@
+{
+  "name": "universal-ledger-agent",
+  "version": "0.1.1",
+  "description": "The universal ledger agent framework, supporting plugins for message communication",
+  "engines": {
+    "node": ">=8.15.0",
+    "npm": ">=5.6.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "compile": "./node_modules/.bin/tsc",
+    "test": "./node_modules/.bin/nyc --check-coverage --lines 80 ./node_modules/.bin/mocha \"test/**/*.test.ts\"",
+    "prepublishOnly": "npm run clean && npm run compile && npm run lint && npm run test",
+    "stryker": "./node_modules/.bin/stryker run",
+    "coverage": "./node_modules/.bin/nyc report",
+    "lint": "tslint -p ./",
+    "postinstall": ""
+  },
+  "keywords": [
+    "plugin",
+    "SSI",
+    "module",
+    "framework",
+    "DLT",
+    "distributed",
+    "blockchain"
+  ],
+  "contributors": [
+    "Marnix van den Bent <marnix.van.den.bent@rabobank.nl>",
+    "Jarl Nieuwenhuijzen <jarl.nieuwenhuijzen@rabobank.nl>"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rabobank-blockchain/universal-ledger-agent"
+  },
+  "bugs": {
+    "url": "https://github.com/rabobank-blockchain/universal-ledger-agent/issues"
+  },
+  "devDependencies": {
+    "@stryker-mutator/core": "^1.0.0",
+    "@stryker-mutator/html-reporter": "^1.0.0",
+    "@stryker-mutator/mocha-runner": "^1.0.0",
+    "@stryker-mutator/typescript": "^1.0.0",
+    "@types/chai": "^4.1.7",
+    "@types/chai-as-promised": "^7.1.0",
+    "@types/fetch-mock": "^7.2.3",
+    "@types/mocha": "^5.2.6",
+    "@types/sinon": "^7.0.6",
+    "@types/sinon-chai": "^3.2.2",
+    "@types/uuid": "^3.4.4",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "fetch-mock": "^7.3.0",
+    "mocha": "^5.2.0",
+    "mocha-multi-reporters": "^1.1.7",
+    "node-fetch": "^2.3.0",
+    "nyc": "^14.1.1",
+    "sinon": "^7.2.3",
+    "sinon-chai": "^3.3.0",
+    "source-map-support": "^0.5.10",
+    "ts-node": "^8.0.1",
+    "tslint": "^5.12.1",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.3.3"
+  },
+  "dependencies": {
+    "class-transformer": "^0.2.0",
+    "uuid": "^3.3.2"
+  }
+}

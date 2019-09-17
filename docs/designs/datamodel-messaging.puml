@@ -1,0 +1,13 @@
+@startuml messaging
+object Message
+object UlaResponse
+
+skinparam roundcorner 20
+hide empty members
+
+Message : type : string
+Message : ...
+
+UlaResponse : statusCode: number
+UlaResponse : body: object
+@enduml
