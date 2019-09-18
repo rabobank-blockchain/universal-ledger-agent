@@ -21,7 +21,7 @@ The components starting with `ula-` are ula-plugins that can be plugged in to th
 
 The components `vp-toolkit`, `vp-toolkit-models`, `vc-status-registry` and `crypt-utils` are used to setup the ula-plugins. They can also be used standalone.
 
-## Example implementation of the holder
+## Example implementation of the holder app
 
 The end-goal is to enrich your application's interoperability by adding the `universal-ledger-agent`, configured with a set of components that we want to use.
 
@@ -54,9 +54,9 @@ npm install ula-vp-controller --save
 npm install ula-vc-data-management --save
 ```
 
-### Implement
+### Instantiating the ULA
 
-Now that we have a clear view of all the elements and their responsibilities, let's start instatiating them so we can configure the ULA. We will do this from bottom to top:
+Now that we have a clear view of all the elements and their responsibilities, let's start instantiating them so we can configure the ULA. We will do this from bottom to top:
 
 1) Instantiate dependencies
 2) Instantiate plugins with their dependencies
@@ -86,7 +86,7 @@ const vcSigner = new VerifiableCredentialSigner(cryptUtil)
 const vpSigner = new VerifiablePresentationSigner(cryptUtil, vcSigner)
 ```
 
-The signers will be used in their respective *generators*. The generators are used to create valid Verifiable Credentials and Verifiable Presentations. The holder will not create a Challenge Request (CR), but must be able to verify the object and signature. Therefore we will not use a generator for `ChallengeRequest`.
+The signers will be used in their respective *generators*. The generators are used to create valid Verifiable Credentials and Verifiable Presentations. The holder will not create a Challenge Request, but must be able to verify the object and signature. Therefore we will not use a generator for `ChallengeRequest`.
 
 ```typescript
 import {
@@ -134,7 +134,7 @@ const vpControllerPlugin = new VpController(
   accountId)
 ```
 
-A storage definition is needed. The [interface](https://github.com/rabobank-blockchain/ula-vc-data-management/blob/master/src/interface/data-storage.ts#L27) is compatible with `@ionic/storage`.
+A storage definition is needed. The [interface](https://github.com/rabobank-blockchain/ula-vc-data-management/blob/master/src/interface/data-storage.ts#L27) is compatible with `@ionic/storage` in case you happen to be using Ionic.
 For illlustration purposes a simple in-memory implementation is defined below:
 
 ```typescript
@@ -181,13 +181,23 @@ import { EventHandler } from 'universal-ledger-agent'
 const plugins = [
   vcDataMgmtPlugin,
   vpControllerPlugin,
-  processQrcodePlugin
+  processQrCodePlugin
 ]
 
 const eventHandler = new EventHandler(plugins)
 ```
 
+You can now start using the ULA by sending messages to it.
+
+### Using the ULA
+
+One or more ULA plugins can be triggered by calling the function `eventHandler.processMsg()`. This function takes 2 parameters: 
+
+1. `jsonObject `: Contains a `type` field (a string) and other arbitrary content. Each plugin decides if the message is useful or not - based on the `type`. The plugin will use the payload to perform its functionality. 
+2. `callback`: If the plugin returns data, this can be done via a callback function. The callback data will be in the form of a [UlaResponse](../src/model/ula-response.ts).
+
 To kick off the process, scan a QR code and process the payload in your application. Feed the payload like this:
+
 ```typescript
 import { UlaResponse } from 'universal-ledger-agent'
 
@@ -201,3 +211,49 @@ eventHandler.processMsg(qrCodeContents, (response: UlaResponse) => {
 	console.log('body:', response.body)
 })
 ```
+
+#### plugin ula-process-eth-barcode
+
+All plugins will listen to the messages that are sent to the eventHandler. Messages of the type 'ethereum-qr' are picked by the plugin [ula-process-eth-barcode](https://github.com/rabobank-blockchain/ula-process-eth-barcode#ula-process-eth-barcode).
+The purpose of this plugin is to provide a way to retrieve a ChallengeRequest.
+
+If the message is correctly formatted, it should contain an url-endpoint like described in the example above.
+The url-endpoint should return a ChallengeRequest.
+This ChallengeRequest - as well as the callback function is then forwarded to the next plugin by sending a ULA message with type 'process-challengerequest'.
+
+#### plugin ula-vp-controller
+
+Messages with the type 'process-challengerequest' are picked up by the [ula-vp-controller](https://github.com/rabobank-blockchain/ula-vp-controller#ula-vp-controller-plugin) plugin.
+This plugin contains a lot of functionality. Its main purpose is to handle the exchange of credentials.
+This can either be receiving credentials from an issuer or sending credentials to a verifier using the W3C Verifiable Credential standard.
+For more details of the used models in the exchange process see [vp-toolkit-models](https://github.com/rabobank-blockchain/vp-toolkit-models#vp-toolkit-models).
+
+The `ula-vp-controller` will return [callbacks](https://github.com/rabobank-blockchain/ula-vp-controller#callbacks) for succes or failure.
+It will also ask for consent before sharing credentials.
+Please note that those callbacks are the callbacks that were instantiated by the first called plugin, the `ula-process-eth-barcode`.
+
+#### plugin ula-vc-data-management
+
+The plugin [ula-vc-data-management](https://github.com/rabobank-blockchain/ula-vc-data-management#ula-vc-data-management) acts as a repository and responds to various message types.
+For a complete list of supported types, see [here](https://github.com/rabobank-blockchain/ula-vc-data-management#usage).
+This plugin is used by the `ula-vp-controller` plugin, but you can also use it directly in the holder-app, to display and manage credentials that are present in the storage. 
+
+For example, we can list all stored attestations, per attestor (issuer):
+
+```typescript
+import { Message, Attestor } from 'universal-ledger-agent'
+
+const getAttestorsMsg = new Message({
+  type: 'get-attestors'
+})
+
+eventHandler.processMsg(getAttestorsMsg, (response: any) => {
+  response.body.forEach( (attestor: Attestor) => {
+    console.log('Attestor:', attestor.name)
+    console.log('Public key:', attestor.pubKey)
+    console.log('Attestations:', attestor.issuedAttestations)
+  })
+})
+```
+
+The message structure and the returned items are according to a minimal but generic data-model that is defined in the [universal-ledger-agent](https://github.com/rabobank-blockchain/universal-ledger-agent#messaging). The `ula-vc-data-management` plugin only stores W3C Verifiable Credentials, but you can also create another data plugin that would store other type of attestations in another format. As long as your data format can be translated to the generic data-model, it will allow for a shared usage of different types of attestors, attestations and transactions.
