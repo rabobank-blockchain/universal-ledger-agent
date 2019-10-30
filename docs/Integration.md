@@ -10,7 +10,7 @@ Component | Used in Issuer | Used in Holder | Used in Verifier
 :--- | :---: | :---: | :---: |
 `universal-ledger-agent` | √ | √ | √ | 
 `ula-vc-data-management` | - | √ | - |
-`ula-process-barcode` | - | √ | - |
+`ula-process-eth-barcode` | - | √ | - |
 `ula-vp-controller` | - | √ | - |
 `vp-toolkit` | √ | √ | √ | √ | 
 `vp-toolkit-models` | √ | √ | √ |
@@ -49,7 +49,7 @@ The plugins at their turn are configured with elements from:
 npm install universal-ledger-agent --save
 npm install vp-toolkit --save
 npm install crypt-util --save
-npm install ula-process-barcode --save
+npm install ula-process-eth-barcode --save
 npm install ula-vp-controller --save
 npm install ula-vc-data-management --save
 ```
