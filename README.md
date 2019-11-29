@@ -41,20 +41,20 @@ In order to implement all available ULA plugins for the Holder in your Typescrip
 To illustrate the usage of the ULA we will install one Holder plugin: `ula-process-eth-barcode`. 
 
 ```bash
-npm install ula-process-barcode --save
+npm install ula-process-eth-barcode --save
 ```
 
-The process-barcode plugin accepts messages of which the type matches the type `ethereum-qr`. The ULA and plugin can then be used as follows:
+The process-eth-barcode plugin accepts messages of which the type matches the type `ethereum-qr`. The ULA and plugin can then be used as follows:
 
 ```typescript
-import { ProcessEthBarcode } from 'ula-process-barcode'
+import { ProcessEthBarcode } from 'ula-process-eth-barcode'
 import { 
   BrowserHttpService, 
   EventHandler, 
   UlaResponse 
 } from 'universal-ledger-agent'
 
-// The process-barcode plugin will need a http-service to send outgoing
+// The process-eth-barcode plugin will need a http-service to send outgoing
 // messages via http. This http-service is provided by the ULA
 
 const httpService = new BrowserHttpService()
