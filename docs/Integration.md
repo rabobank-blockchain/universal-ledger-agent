@@ -52,6 +52,7 @@ npm install crypt-util --save
 npm install ula-process-barcode --save
 npm install ula-vp-controller --save
 npm install ula-vc-data-management --save
+npm install ula-process-eth-barcode --save
 ```
 
 ### Instantiating the ULA
@@ -170,6 +171,8 @@ const vcDataMgmtPlugin = new VcDataManagement(vcDataRepository, addressRepositor
 The **ULA process QrCode plugin** is the last plugin that we construct: 
 
 ```typescript
+import { ProcessEthBarcode } from 'ula-process-eth-barcode'
+
 const processQrCodePlugin = new ProcessEthBarcode(browserHttpService)
 ```
 
