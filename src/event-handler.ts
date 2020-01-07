@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Message, Plugin } from '.'
+import { Message, Plugin, UlaCallback } from '.'
 
 export class EventHandler {
   private enabledPlugins: Plugin[] = []
@@ -33,7 +33,7 @@ export class EventHandler {
    * @param jsonObject
    * @param callback
    */
-  async processMsg (jsonObject: any, callback: any) {
+  async processMsg (jsonObject: any, callback: UlaCallback) {
     const promises: Promise<void>[] = []
     // Broadcast the event
     for (const plugin of this.enabledPlugins) {

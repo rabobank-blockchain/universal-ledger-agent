@@ -18,7 +18,7 @@
   * Every plugin must implement this interface
   */
 import { EventHandler } from '../event-handler'
-import { Message } from '..'
+import { Message, UlaCallback } from '..'
 
 export interface Plugin {
   /**
@@ -42,5 +42,5 @@ export interface Plugin {
    * @param callback - your callback function to listen for results
    * @returns string - the statuscode
    */
-  handleEvent (message: Message, callback: any): Promise<string>
+  handleEvent (message: Message, callback: UlaCallback): Promise<string>
 }

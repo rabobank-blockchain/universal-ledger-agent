@@ -32,6 +32,8 @@ export { Plugin } from './interface/plugin'
 
 export { HttpService } from './interface/http-service'
 
+export { UlaCallback } from './interface/ula-callback'
+
 export { BrowserHttpService } from './service/browser-http-service'
 
 export { GenericStatusCodes } from './interface/generic-status-codes'
