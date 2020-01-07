@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,37 +15,28 @@
  */
 
 import { assert } from 'chai'
-import { UlaResponse } from '../../../src'
+import { PluginResult } from '../../../src'
 
 const testData = {
-  statusCode: 'some-status-code',
-  body: {
-    canBeAnything: 'anything'
-  },
-  error: new Error('Something went wrong!')
+  pluginName: 'plugin-name',
+  statusCode: 'success'
 }
 
-describe('UlaResponse constructor', function () {
+describe('PluginResult constructor', function () {
 
   it('should not throw on valid inputs', () => {
     const createSut = () => {
-      return new UlaResponse(testData)
+      return new PluginResult(testData.pluginName, testData.statusCode)
     }
 
     createSut()
     assert.doesNotThrow(createSut)
   })
 
-  it('should convert a JSON object to a UlaResponse class', () => {
-    const sut1 = new UlaResponse(testData)
+  it('should serialize and parse properly', () => {
+    const sut1 = new PluginResult(testData.pluginName, testData.statusCode)
     const jsonObj = JSON.parse(JSON.stringify(sut1))
-    const sut2 = new UlaResponse(jsonObj)
-    assert.strictEqual(sut1.statusCode, sut2.statusCode)
-    assert.deepEqual(sut1.body, sut2.body)
-    // @ts-ignore
-    assert.equal(sut1.error.message, sut2.error.message)
-    // @ts-ignore
-    assert.equal(sut1.error.stack, sut2.error.stack)
+    assert.strictEqual(jsonObj.pluginName, testData.pluginName)
+    assert.strictEqual(jsonObj.statusCode, testData.statusCode)
   })
-
 })

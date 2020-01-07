@@ -14,17 +14,31 @@
  * limitations under the License.
  */
 
-import { EventHandler, Message, Plugin, UlaResponse } from '../../src'
+import { EventHandler, Message, Plugin, UlaCallback, UlaError, UlaResponse } from '../../src'
+
+export enum ErrorTypeToThrow {
+  None = 0,
+  UlaError = 1,
+  RangeError = 2
+}
 
 export class TestPlugin implements Plugin {
   private _eventHandler: EventHandler | undefined
-  private _shouldThrow = false
+  private _shouldThrow: ErrorTypeToThrow = ErrorTypeToThrow.None
 
   get name () {
     return 'TestPlugin'
   }
 
-  set shouldThrow (value: boolean) {
+  static get ulaErrorToThrow (): UlaError {
+    return new UlaError('error-code', 'Something went wrong')
+  }
+
+  static get rangeErrorToThrow (): RangeError {
+    return new RangeError('Something was out of bounds')
+  }
+
+  set shouldThrow (value: ErrorTypeToThrow) {
     this._shouldThrow = value
   }
 
@@ -32,13 +46,17 @@ export class TestPlugin implements Plugin {
     this._eventHandler = eventHandler
   }
 
-  async handleEvent (message: Message, callback: any): Promise<string> {
-    if (!message.properties.type.match(/did:test:[A-Za-z0-9]*;spec\/test\/1\.0\/this/g)) {
+  async handleEvent (message: Message, callback: UlaCallback): Promise<string> {
+    if (message.properties.type !== 'test') {
       return 'ignored' // This message is not intended for us
     }
 
-    if (this._shouldThrow) {
-      throw new Error('Something went wrong')
+    if (this._shouldThrow === ErrorTypeToThrow.UlaError) {
+      throw TestPlugin.ulaErrorToThrow
+    }
+
+    if (this._shouldThrow === ErrorTypeToThrow.RangeError) {
+      throw TestPlugin.rangeErrorToThrow
     }
 
     callback(new UlaResponse({
