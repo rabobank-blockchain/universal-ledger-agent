@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ describe('http service', function () {
     sut = new BrowserHttpService()
   })
 
-  describe('getRequest happy flow', function () {
+  describe('getRequest errors', function () {
     it('should call the url and return the response in json format', async () => {
       fetchMock.get(url, jsonResponse)
       const call = await sut.getRequest(url)
@@ -48,9 +48,25 @@ describe('http service', function () {
       fetchMock.lastOptions().headers.should.deep.equal({ 'Content-Type': 'application/json' })
       return call.should.deep.equal(jsonResponse)
     })
+
+    it('should call the url and throw error for HTTP code 400', () => {
+      fetchMock.get(url, { body: { isTestValue: true }, status: 400 })
+      const call = sut.getRequest(url)
+
+      fetchMock.called(url).should.equal(true)
+      return call.should.be.rejectedWith('Bad Request')
+    })
+
+    it('should call the url and throw error for HTTP code 500', () => {
+      fetchMock.get(url, { body: { isTestValue: true }, status: 500 })
+      const call = sut.getRequest(url)
+
+      fetchMock.called(url).should.equal(true)
+      return call.should.be.rejectedWith('Internal Server Error')
+    })
   })
 
-  describe('postRequest happy flow', function () {
+  describe('postRequest errors', function () {
     const postPayload = { entity: 'value', nestedObject: { obj: true, name: 'nest' } }
     it('should call the url and return the response in json format', async () => {
       fetchMock.post(url, jsonResponse)
@@ -60,6 +76,31 @@ describe('http service', function () {
       // @ts-ignore
       fetchMock.lastOptions().headers.should.deep.equal({ 'Content-Type': 'application/json' })
       return call.should.deep.equal(jsonResponse)
+    })
+
+    it('should call the url and throw error for HTTP code 400', () => {
+      fetchMock.post(url, { body: { isTestValue: true }, status: 400 })
+      const call = sut.postRequest(url, postPayload)
+
+      fetchMock.called(url).should.equal(true)
+      return call.should.be.rejectedWith('Bad Request')
+    })
+
+    it('should call the url and throw error for HTTP code 500', () => {
+      fetchMock.post(url, { body: { testValue: true }, status: 500 })
+      const call = sut.postRequest(url, postPayload)
+
+      fetchMock.called(url).should.equal(true)
+      return call.should.be.rejectedWith('Internal Server Error')
+    })
+
+    it('should call the url and throw specific error when it is present', () => {
+      const errorMessage = 'An error occurred'
+      fetchMock.post(url, { body: { thisIsATest: true, error: errorMessage }, status: 500 })
+      const call = sut.postRequest(url, postPayload)
+
+      fetchMock.called(url).should.equal(true)
+      return call.should.be.rejectedWith(errorMessage)
     })
   })
 })
