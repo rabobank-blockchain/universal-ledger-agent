@@ -139,7 +139,7 @@ export class Attestation {
   }
 
   /**
-   * Converts this object to a json string
+   * Converts this object to a json object
    * @return object
    */
   public toJSON (): object {
