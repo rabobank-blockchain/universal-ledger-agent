@@ -45,7 +45,7 @@ describe('Message constructor', function () {
     assert.doesNotThrow(createSut)
   })
 
-  it('should convert a JSON object to a Proof class', () => {
+  it('should convert a JSON object to a Message class', () => {
     const sut1 = new Message(testData)
     const jsonObj = JSON.parse(JSON.stringify(sut1))
     const sut2 = new Message(jsonObj)
