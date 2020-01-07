@@ -42,7 +42,7 @@ export class Message {
   }
 
   /**
-   * Converts a this object to a json string
+   * Converts a this object to a json object
    * @return object
    */
   public toJSON (): object {
