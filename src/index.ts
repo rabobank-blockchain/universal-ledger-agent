@@ -34,4 +34,4 @@ export { HttpService } from './interface/http-service'
 
 export { BrowserHttpService } from './service/browser-http-service'
 
-// export { EventResponseType } from './enum/EventResponseType'
+export { GenericStatusCodes } from './interface/generic-status-codes'
