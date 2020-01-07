@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { Message, Plugin, UlaCallback } from '.'
+import { Message, Plugin, UlaCallback, UlaError, UlaResponse } from '.'
+import { PluginResult } from './model/plugin-result'
 
 export class EventHandler {
   private enabledPlugins: Plugin[] = []
@@ -34,15 +35,18 @@ export class EventHandler {
    * @param callback
    */
   async processMsg (jsonObject: any, callback: UlaCallback) {
-    const promises: Promise<void>[] = []
+    const promises: Promise<PluginResult>[] = []
     // Broadcast the event
     for (const plugin of this.enabledPlugins) {
-      promises.push(new Promise(async (resolve, reject) => {
+      promises.push(new Promise(async (resolve) => {
+        let statusCode: string = 'unknown'
         try {
-          await plugin.handleEvent(new Message(jsonObject), callback)
-          resolve()
+          statusCode = await plugin.handleEvent(new Message(jsonObject), callback)
         } catch (err) {
-          reject(err)
+          statusCode = err instanceof UlaError ? err.statusCode : 'error' // Unknown error
+          callback(new UlaResponse({ statusCode, body: {}, error: err }))
+        } finally {
+          resolve(new PluginResult(plugin.name, statusCode))
         }
       }))
     }
