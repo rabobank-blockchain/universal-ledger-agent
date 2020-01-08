@@ -1,0 +1,7 @@
+{
+  "require": [
+    "./node_modules/ts-node/register",
+    "./node_modules/source-map-support/register"
+  ],
+  "recursive": true
+}
