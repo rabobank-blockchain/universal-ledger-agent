@@ -1,6 +1,6 @@
 {
   "name": "universal-ledger-agent",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "The universal ledger agent framework, supporting plugins for message communication",
   "engines": {
     "node": ">=8.15.0",
