@@ -40,8 +40,13 @@ describe('UlaResponse getters', function () {
     assert.deepStrictEqual(sut.error, testData.error)
   })
 
-  it('should flatten an object using JSON.stringify()', () => {
+  it('should flatten an object (with error) using JSON.stringify()', () => {
     const sutError = sut.error as Error
     assert.strictEqual(JSON.stringify(sut), `{"statusCode":"some-status-code","body":{"canBeAnything":"anything"},"error":{"message":"Something went wrong!","stack":${JSON.stringify(sutError.stack)}}}`)
+  })
+
+  it('should flatten an object (without error) using JSON.stringify()', () => {
+    const sutWithoutError = new UlaResponse({ statusCode: testData.statusCode, body: testData.body })
+    assert.strictEqual(JSON.stringify(sutWithoutError), `{"statusCode":"some-status-code","body":{"canBeAnything":"anything"}}`)
   })
 })
