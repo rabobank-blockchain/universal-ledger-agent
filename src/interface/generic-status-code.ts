@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export enum GenericStatusCodes {
+export enum GenericStatusCode {
   /**
    * In case your plugin ignored
    * the incoming message.
