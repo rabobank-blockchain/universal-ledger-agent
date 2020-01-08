@@ -23,60 +23,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const class_transformer_1 = require("class-transformer");
 /**
- * UlaResponse object is sent back to the caller
- * and acts like an HTTP response. It contains
- * a statuscode and a dynamic body.
+ * An array of PluginResults will be
+ * returned by the ULA after handling
+ * all messages
  */
-class UlaResponse {
-    constructor(ulaResponse) {
-        this._statusCode = ulaResponse.statusCode;
-        this._body = ulaResponse.body;
-        this._error = ulaResponse.error;
+class PluginResult {
+    constructor(pluginName, statusCode) {
+        this._pluginName = pluginName;
+        this._statusCode = statusCode;
     }
     /**
-     * Status code
+     * The plugin exited with
+     * this status code
      * @return any
      */
     get statusCode() {
         return this._statusCode;
     }
     /**
-     * The dynamic body
-     * @return any
+     * The name of the plugin
+     * (Plugin.name property)
+     * @return string
      */
-    get body() {
-        return this._body;
-    }
-    /**
-     * (Optional) error
-     * @return Error|undefined
-     */
-    get error() {
-        return this._error;
+    get pluginName() {
+        return this._pluginName;
     }
     /**
      * Converts a this object to a json object
-     * NOTE: Some properties of the Error might
-     *       be lost after serializing.
      * @return object
      */
     toJSON() {
-        const plainObject = class_transformer_1.classToPlain(this, { excludePrefixes: ['_'] });
-        plainObject.error = this._error ? {
-            message: this._error.message,
-            stack: this._error.stack
-        } : undefined;
-        return plainObject;
+        return class_transformer_1.classToPlain(this, { excludePrefixes: ['_'] });
     }
 }
 __decorate([
     class_transformer_1.Expose()
-], UlaResponse.prototype, "statusCode", null);
+], PluginResult.prototype, "statusCode", null);
 __decorate([
     class_transformer_1.Expose()
-], UlaResponse.prototype, "body", null);
-__decorate([
-    class_transformer_1.Expose()
-], UlaResponse.prototype, "error", null);
-exports.UlaResponse = UlaResponse;
-//# sourceMappingURL=ula-response.js.map
+], PluginResult.prototype, "pluginName", null);
+exports.PluginResult = PluginResult;
+//# sourceMappingURL=plugin-result.js.map

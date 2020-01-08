@@ -1,6 +1,6 @@
 "use strict";
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
+const plugin_result_1 = require("./model/plugin-result");
 class EventHandler {
     // private disabledPlugins: Plugin[] = []
     constructor(plugins) {
@@ -45,13 +46,17 @@ class EventHandler {
             const promises = [];
             // Broadcast the event
             for (const plugin of this.enabledPlugins) {
-                promises.push(new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                promises.push(new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+                    let statusCode = 'unknown';
                     try {
-                        yield plugin.handleEvent(new _1.Message(jsonObject), callback);
-                        resolve();
+                        statusCode = yield plugin.handleEvent(new _1.UlaMessage(jsonObject), callback);
                     }
                     catch (err) {
-                        reject(err);
+                        statusCode = err instanceof _1.UlaError ? err.statusCode : 'error'; // Unknown error
+                        callback(new _1.UlaResponse({ statusCode, body: {}, error: err }));
+                    }
+                    finally {
+                        resolve(new plugin_result_1.PluginResult(plugin.name, statusCode));
                     }
                 })));
             }

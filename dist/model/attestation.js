@@ -1,6 +1,6 @@
 "use strict";
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,7 +107,7 @@ class Attestation {
         return this._statements;
     }
     /**
-     * Converts this object to a json string
+     * Converts this object to a json object
      * @return object
      */
     toJSON() {

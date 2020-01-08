@@ -23,15 +23,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const class_transformer_1 = require("class-transformer");
 /**
- * UlaResponse object is sent back to the caller
- * and acts like an HTTP response. It contains
- * a statuscode and a dynamic body.
+ * The UlaError has an extra field
+ * 'statusCode' and inherits the Error type.
  */
-class UlaResponse {
-    constructor(ulaResponse) {
-        this._statusCode = ulaResponse.statusCode;
-        this._body = ulaResponse.body;
-        this._error = ulaResponse.error;
+class UlaError extends Error {
+    constructor(statusCode, message) {
+        super(message);
+        this._statusCode = statusCode;
+        Object.setPrototypeOf(this, UlaError.prototype);
     }
     /**
      * Status code
@@ -41,42 +40,19 @@ class UlaResponse {
         return this._statusCode;
     }
     /**
-     * The dynamic body
-     * @return any
-     */
-    get body() {
-        return this._body;
-    }
-    /**
-     * (Optional) error
-     * @return Error|undefined
-     */
-    get error() {
-        return this._error;
-    }
-    /**
      * Converts a this object to a json object
-     * NOTE: Some properties of the Error might
-     *       be lost after serializing.
      * @return object
      */
     toJSON() {
-        const plainObject = class_transformer_1.classToPlain(this, { excludePrefixes: ['_'] });
-        plainObject.error = this._error ? {
-            message: this._error.message,
-            stack: this._error.stack
-        } : undefined;
-        return plainObject;
+        return {
+            statusCode: this.statusCode,
+            message: this.message,
+            stack: this.stack
+        };
     }
 }
 __decorate([
     class_transformer_1.Expose()
-], UlaResponse.prototype, "statusCode", null);
-__decorate([
-    class_transformer_1.Expose()
-], UlaResponse.prototype, "body", null);
-__decorate([
-    class_transformer_1.Expose()
-], UlaResponse.prototype, "error", null);
-exports.UlaResponse = UlaResponse;
-//# sourceMappingURL=ula-response.js.map
+], UlaError.prototype, "statusCode", null);
+exports.UlaError = UlaError;
+//# sourceMappingURL=ula-error.js.map

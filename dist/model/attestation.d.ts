@@ -71,7 +71,7 @@ export declare class Attestation {
      */
     readonly statements: any;
     /**
-     * Converts this object to a json string
+     * Converts this object to a json object
      * @return object
      */
     toJSON(): object;
