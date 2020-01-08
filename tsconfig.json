@@ -11,7 +11,7 @@
     "typeRoots": ["node_modules/@types"],
     "target": "es6",
     "lib": ["es6", "dom"],
-    "rootDir": "src",
+    "rootDirs": ["src", "test"],
     "outDir": "dist",
     "types": [
       "mocha"
