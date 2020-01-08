@@ -17,7 +17,7 @@
 import * as chai from 'chai'
 import * as sinonChai from 'sinon-chai'
 import { describe, it } from 'mocha'
-import { EventHandler, Message, UlaResponse, PluginResult } from '../../../src'
+import { EventHandler, UlaMessage, UlaResponse, PluginResult } from '../../../src'
 import { ErrorTypeToThrow, TestPlugin } from '../../mocks/test-plugin'
 
 const assert = chai.assert
@@ -32,9 +32,9 @@ const ulaMessage = {
 }
 
 describe('EventHandler', () => {
-  it('should verify JSON.stringify functionality in Message', () => {
+  it('should verify JSON.stringify functionality in UlaMessage', () => {
     // Act
-    const messageObject = new Message(ulaMessage)
+    const messageObject = new UlaMessage(ulaMessage)
     // Assert
     assert.equal(JSON.stringify(ulaMessage), JSON.stringify(messageObject))
   })

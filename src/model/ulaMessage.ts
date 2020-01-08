@@ -15,14 +15,14 @@
  */
 
 /**
- * The ULA Message type is used to
+ * The UlaMessage type is used to
  * send messages (events) to ULA plugins.
  * The object is entirely dynamic, but it
  * does require a 'type' field, so the
  * plugins can recognize (or ignore) the
  * event.
  */
-export class Message {
+export class UlaMessage {
   private readonly _obj: any
 
   constructor (obj: any) {
@@ -48,5 +48,13 @@ export class Message {
   public toJSON (): object {
     return this._obj
   }
+
+}
+
+/**
+ * @deprecated Please use UlaMessage
+ * @see UlaMessage
+ */
+export class Message extends UlaMessage {
 
 }
