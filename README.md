@@ -89,6 +89,23 @@ const callback = function(response: UlaResponse) {
 }
 ```
 
+### Catching errors
+If one plugin throws an Error, other plugins will still continue executing their workflow.
+The callback function will be triggered in case of a plugin error. Application developers must listen to these errors (example below).
+We advise ULA plugin developers to provide a clear list of all Error codes and their descriptions for the application developers.
+
+```typescript
+const callback = function(response: UlaResponse) {
+	// Note that it's theoretically possible that multiple errors can occur!
+	console.log('statuscode:', response.statusCode) // 'error-cr'
+	console.log('body:', response.body) // {}
+	console.log('body:', response.error) // Error('The ChallengeRequest validation failed: Invalid signature')
+	// Inform your user that the connection setup with the third party failed
+}
+
+eventHandler.processMsg(message, callback)
+```
+
 ## Running tests
 
 Besides unit testing with Mocha, the effectivity of all tests are also measured with the Stryker mutation testing framework.
