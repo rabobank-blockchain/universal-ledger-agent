@@ -34,5 +34,3 @@ export enum GenericStatusCodes {
    */
   Success = 'success'
 }
-
-export default GenericStatusCodes
