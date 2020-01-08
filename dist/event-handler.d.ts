@@ -1,3 +1,5 @@
+import { UlaCallback } from '.';
+import { PluginResult } from './model/plugin-result';
 export declare class EventHandler {
     private plugins;
     private enabledPlugins;
@@ -8,5 +10,5 @@ export declare class EventHandler {
      * @param jsonObject
      * @param callback
      */
-    processMsg(jsonObject: any, callback: any): Promise<void[]>;
+    processMsg(jsonObject: any, callback: UlaCallback): Promise<PluginResult[]>;
 }

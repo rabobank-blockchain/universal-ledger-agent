@@ -72,7 +72,7 @@ export declare class Transaction {
      */
     readonly error: string | undefined;
     /**
-     * Converts a this object to a json string
+     * Converts a this object to a json object
      * @return object
      */
     toJSON(): object;

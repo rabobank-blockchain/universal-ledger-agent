@@ -2,7 +2,7 @@
  * Every plugin must implement this interface
  */
 import { EventHandler } from '../event-handler';
-import { Message } from '..';
+import { UlaMessage, UlaCallback } from '..';
 export interface Plugin {
     /**
      * This method is called when the EventHandler is being constructed.
@@ -18,10 +18,10 @@ export interface Plugin {
     /**
      * This method is called when the EventHandler received a message.
      * The message is broadcasted, so the plugin must match the 'type' field
-     * in the Message.
-     * @param message
-     * @param callback
+     * in the UlaMessage.
+     * @param message - the received message from the ULA
+     * @param callback - your callback function to listen for results
      * @returns string - the statuscode
      */
-    handleEvent(message: Message, callback: any): Promise<string>;
+    handleEvent(message: UlaMessage, callback: UlaCallback): Promise<string>;
 }

@@ -1,10 +1,14 @@
 export { EventHandler } from './event-handler';
 export { HttpHandler } from './http-handler';
-export { Message } from './model/message';
+export { UlaMessage, Message } from './model/ulaMessage';
 export { IAttestation, Attestation } from './model/attestation';
 export { IAttestor, Attestor } from './model/attestor';
 export { ITransaction, Transaction } from './model/transaction';
 export { IUlaResponse, UlaResponse } from './model/ula-response';
+export { PluginResult } from './model/plugin-result';
+export { UlaError } from './model/ula-error';
 export { Plugin } from './interface/plugin';
 export { HttpService } from './interface/http-service';
+export { UlaCallback } from './interface/ula-callback';
 export { BrowserHttpService } from './service/browser-http-service';
+export { GenericStatusCode } from './interface/generic-status-code';

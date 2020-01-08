@@ -1,6 +1,6 @@
 "use strict";
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * The ULA Message type is used to
+ * The UlaMessage type is used to
  * send messages (events) to ULA plugins.
  * The object is entirely dynamic, but it
  * does require a 'type' field, so the
  * plugins can recognize (or ignore) the
  * event.
  */
-class Message {
+class UlaMessage {
     constructor(obj) {
         if (!obj.type) {
             throw new ReferenceError('Type field is missing');
@@ -38,12 +38,19 @@ class Message {
         return this._obj;
     }
     /**
-     * Converts a this object to a json string
+     * Converts a this object to a json object
      * @return object
      */
     toJSON() {
         return this._obj;
     }
 }
+exports.UlaMessage = UlaMessage;
+/**
+ * @deprecated Please use UlaMessage
+ * @see UlaMessage
+ */
+class Message extends UlaMessage {
+}
 exports.Message = Message;
-//# sourceMappingURL=message.js.map
+//# sourceMappingURL=ulaMessage.js.map

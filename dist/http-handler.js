@@ -1,6 +1,6 @@
 "use strict";
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @deprecated Please use the EventHandler
+ * Incase your request is a string, parse it
+ * before calling the EventHandler.
+ * @see https://github.com/rabobank-blockchain/universal-ledger-agent/issues/11
+ */
 class HttpHandler {
     constructor(eventHandler) {
         this.eventHandler = eventHandler;
