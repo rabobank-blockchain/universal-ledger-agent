@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { EventHandler, Message, Plugin, UlaCallback, UlaError, UlaResponse } from '../../src'
+import { EventHandler, UlaMessage, Plugin, UlaCallback, UlaError, UlaResponse } from '../../src'
 
 export enum ErrorTypeToThrow {
   None = 0,
@@ -46,7 +46,7 @@ export class TestPlugin implements Plugin {
     this._eventHandler = eventHandler
   }
 
-  async handleEvent (message: Message, callback: UlaCallback): Promise<string> {
+  async handleEvent (message: UlaMessage, callback: UlaCallback): Promise<string> {
     if (message.properties.type !== 'test') {
       return 'ignored' // This message is not intended for us
     }

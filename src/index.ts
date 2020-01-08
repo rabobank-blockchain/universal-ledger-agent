@@ -18,7 +18,7 @@ export { EventHandler } from './event-handler'
 
 export { HttpHandler } from './http-handler'
 
-export { Message } from './model/message'
+export { UlaMessage, Message } from './model/ulaMessage'
 
 export { IAttestation, Attestation } from './model/attestation'
 
