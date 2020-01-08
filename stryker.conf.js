@@ -8,7 +8,7 @@ module.exports = function (config) {
     tsconfigFile: 'tsconfig.json',
     mutate: ['src/**/*.ts'],
     mochaOptions: {
-      files: [
+      spec: [
         'test/**/*.test.ts']
     },
     thresholds: {
