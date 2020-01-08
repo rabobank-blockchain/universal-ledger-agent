@@ -15,19 +15,19 @@
  */
 
 import { assert } from 'chai'
-import { GenericStatusCodes } from '../../../src'
+import { GenericStatusCode } from '../../../src'
 
-describe('GenericStatusCodes enum values', function () {
+describe('GenericStatusCode enum values', function () {
   it('should have value "ignored" for Ignored', () => {
-    assert.equal(GenericStatusCodes.Ignored, 'ignored')
+    assert.equal(GenericStatusCode.Ignored, 'ignored')
   })
 
   it('should have value "error" for Error', () => {
-    assert.equal(GenericStatusCodes.Error, 'error')
+    assert.equal(GenericStatusCode.Error, 'error')
   })
 
   it('should have value "success" for Success', () => {
-    assert.equal(GenericStatusCodes.Success, 'success')
+    assert.equal(GenericStatusCode.Success, 'success')
   })
 
 })

@@ -40,4 +40,4 @@ export { UlaCallback } from './interface/ula-callback'
 
 export { BrowserHttpService } from './service/browser-http-service'
 
-export { GenericStatusCodes } from './interface/generic-status-codes'
+export { GenericStatusCode } from './interface/generic-status-code'
