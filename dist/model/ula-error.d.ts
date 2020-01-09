@@ -9,7 +9,7 @@ export declare class UlaError extends Error {
      * Status code
      * @return any
      */
-    readonly statusCode: any;
+    get statusCode(): any;
     /**
      * Converts a this object to a json object
      * @return object

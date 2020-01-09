@@ -31,46 +31,46 @@ export declare class Transaction {
      * The uuid of the transaction
      * @return string
      */
-    readonly uuid: string;
+    get uuid(): string;
     /**
      * The public key or DID from the attestor
      * @return string
      */
-    readonly attestorPubKey: string;
+    get attestorPubKey(): string;
     /**
      * When the transaction took place
      * @return Date
      */
-    readonly datetime: Date;
+    get datetime(): Date;
     /**
      * The list of claims/credentialsubjects
      * that have been attested during this transaction
      * @return {Attestation[]}
      */
-    readonly attest: Attestation[];
+    get attest(): Attestation[];
     /**
      * The list of claims/credentialsubjects that
      * have been revoked during this transaction
      * @return {Attestation[]}
      */
-    readonly revoke: Attestation[];
+    get revoke(): Attestation[];
     /**
      * The list of claims/credentialsubjects that
      * have been verified during this transaction
      * @return {Attestation[]}
      */
-    readonly verifyRequest: Attestation[];
+    get verifyRequest(): Attestation[];
     /**
      * Optional - the current state of this transaction
      * Can be 'success', 'error' or 'pending'
      * @return {string|undefined}
      */
-    readonly state: string | undefined;
+    get state(): string | undefined;
     /**
      * Optional - the error message
      * @return {string|undefined}
      */
-    readonly error: string | undefined;
+    get error(): string | undefined;
     /**
      * Converts a this object to a json object
      * @return object

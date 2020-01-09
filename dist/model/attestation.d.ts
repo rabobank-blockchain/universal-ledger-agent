@@ -28,48 +28,48 @@ export declare class Attestation {
      * The uuid of this attestation
      * @return string
      */
-    readonly uuid: string;
+    get uuid(): string;
     /**
      * The attestor/issuer public key
      * (Can also be a DID)
      * @return string
      */
-    readonly attestorPubKey: string;
+    get attestorPubKey(): string;
     /**
      * The forPubKey (the subject/holder)
      * @return {string|undefined}
      */
-    readonly forPubKey: string | undefined;
+    get forPubKey(): string | undefined;
     /**
      * Gives context to the contents of
      * this attestation. Usually this is
      * a collection of schema.org url's.
      * @return {string[]}
      */
-    readonly context: string[];
+    get context(): string[];
     /**
      * Room for various types/properties
      * @return {string[]}
      */
-    readonly type: string[];
+    get type(): string[];
     /**
      * The expiry time of this attestation
      * @return {Date|undefined}
      */
-    readonly expires: Date | undefined;
+    get expires(): Date | undefined;
     /**
      * The datetime when this attestation
      * was issued.
      * @return Date
      */
-    readonly datetime: Date;
+    get datetime(): Date;
     /**
      * The statements of this attestation.
      * This is a key-value pair array, just
      * like a set of claims or CredentialSubjects.
      * @return any
      */
-    readonly statements: any;
+    get statements(): any;
     /**
      * Converts this object to a json object
      * @return object
