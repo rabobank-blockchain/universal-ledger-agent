@@ -17,17 +17,17 @@ export declare class UlaResponse {
      * Status code
      * @return any
      */
-    get statusCode(): any;
+    readonly statusCode: any;
     /**
      * The dynamic body
      * @return any
      */
-    get body(): any;
+    readonly body: any;
     /**
      * (Optional) error
      * @return Error|undefined
      */
-    get error(): Error | undefined;
+    readonly error: Error | undefined;
     /**
      * Converts a this object to a json object
      * NOTE: Some properties of the Error might

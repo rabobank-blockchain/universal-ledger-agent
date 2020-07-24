@@ -1,6 +1,6 @@
 export { EventHandler } from './event-handler';
 export { HttpHandler } from './http-handler';
-export { UlaMessage, Message } from './model/ulaMessage';
+export { UlaMessage, Message } from './model/ula-message';
 export { IAttestation, Attestation } from './model/attestation';
 export { IAttestor, Attestor } from './model/attestor';
 export { ITransaction, Transaction } from './model/transaction';

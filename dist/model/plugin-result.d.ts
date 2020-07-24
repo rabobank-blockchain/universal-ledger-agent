@@ -12,13 +12,13 @@ export declare class PluginResult {
      * this status code
      * @return any
      */
-    get statusCode(): any;
+    readonly statusCode: any;
     /**
      * The name of the plugin
      * (Plugin.name property)
      * @return string
      */
-    get pluginName(): string;
+    readonly pluginName: string;
     /**
      * Converts a this object to a json object
      * @return object

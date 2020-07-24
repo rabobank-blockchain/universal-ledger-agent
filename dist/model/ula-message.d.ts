@@ -13,7 +13,7 @@ export declare class UlaMessage {
      * The dynamic properties of the message
      * @return any
      */
-    get properties(): any;
+    readonly properties: any;
     /**
      * Converts a this object to a json object
      * @return object
