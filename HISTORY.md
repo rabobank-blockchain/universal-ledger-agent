@@ -1,4 +1,4 @@
-# 0.2.0 / --
+# 0.2.0 / 27-07-2020
 
 **BREAKING**
 - The callback function signature is now strictly typed instead of `any`. Application developers are required to follow this signature ([#12](https://github.com/rabobank-blockchain/universal-ledger-agent/issues/12))
@@ -19,6 +19,12 @@
 - Refactored HttpService and HttpHandler tests
 - Stryker score back to 100 (stable)
 - Improved documentation
+- Security patches updates for dependent packages
+
+# 0.1.3 / 23-03-2020
+
+**Enhancements:**
+- Downgraded TypeScript to v3.4.5 to provide proper `d.ts` files (v3.7 breaks this)
 
 # 0.1.2 / 08-01-2020
 
@@ -26,6 +32,6 @@
 - Updated all dependencies, fixed [CVE-2019-19919](https://github.com/advisories/GHSA-w457-6q6x-cgp9)
 - Introduced [HISTORY.md](HISTORY.md)
 
-# 0.1.1 / 17-09-2019
+#0.1.1 / 17-09-2019
 
 *Initial release*

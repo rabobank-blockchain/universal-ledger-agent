@@ -1,6 +1,6 @@
 {
   "name": "universal-ledger-agent",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "The universal ledger agent framework, supporting plugins for message communication",
   "engines": {
     "node": ">=8.15.0",
@@ -71,6 +71,6 @@
   },
   "dependencies": {
     "class-transformer": "^0.2.3",
-    "uuid": "^3.3.3"
+    "uuid": "^3.4.0"
   }
 }
