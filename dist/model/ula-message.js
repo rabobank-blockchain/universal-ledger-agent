@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-"use strict";
+"use strict"
 /*
  * Copyright 2020 Coöperatieve Rabobank U.A.
  *
@@ -31,24 +31,49 @@
  * limitations under the License.
  */
 Object.defineProperty(exports, "__esModule", {value: true})
-exports.GenericStatusCode = void 0
-var GenericStatusCode;
-(function (GenericStatusCode) {
-    /**
-     * In case your plugin ignored
-     * the incoming message.
-     */
-    GenericStatusCode["Ignored"] = "ignored";
-    /**
-     * Generic, unknown error
-     * Please use a more specific
-     * error code in your plugin!
-     */
-    GenericStatusCode["Error"] = "error";
-    /**
-     * Use this code once your plugin
-     * successfully finished its work.
-     */
-    GenericStatusCode["Success"] = "success";
-})(GenericStatusCode = exports.GenericStatusCode || (exports.GenericStatusCode = {}));
-//# sourceMappingURL=generic-status-code.js.map
+exports.Message = exports.UlaMessage = void 0
+
+/**
+ * The UlaMessage type is used to
+ * send messages (events) to ULA plugins.
+ * The object is entirely dynamic, but it
+ * does require a 'type' field, so the
+ * plugins can recognize (or ignore) the
+ * event.
+ */
+class UlaMessage {
+  constructor(obj) {
+    if (!obj.type) {
+      throw new ReferenceError('Type field is missing')
+    }
+    this._obj = obj
+  }
+
+  /**
+   * The dynamic properties of the message
+   * @return any
+   */
+  get properties() {
+    return this._obj
+  }
+
+  /**
+   * Converts a this object to a json object
+   * @return object
+   */
+  toJSON() {
+    return this._obj
+  }
+}
+
+exports.UlaMessage = UlaMessage
+
+/**
+ * @deprecated Please use UlaMessage
+ * @see UlaMessage
+ */
+class Message extends UlaMessage {
+}
+
+exports.Message = Message
+//# sourceMappingURL=ula-message.js.map
