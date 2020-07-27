@@ -7,21 +7,6 @@
 
 This repository contains the Universal Ledger Agent, a TypeScript/Javascript library that acts as the main component of a plugin system that implements a message-based approach. The library can be used in browsers and Node.js backends.
 
-## Data Models
-
-The following common data models are exposed so that independent plugins can exchange meaningful data.
-
-### Messaging
-
-![Component interaction](docs/designs/datamodel-messaging.png "Data model Messaging")
-
-### Self Sovereign Identity
-
-The ULA is primarily meant for managing Self Sovereign Identity data. A data model is provided for this purpose.
-All plugins must be able to translate their own data structures back to this data model.
-
-![Component interaction](docs/designs/datamodel-ssi.png "Data model SSI")
-
 ## Installation
 
 In an existing project (with `package.json`), install `universal-ledger-agent`
@@ -33,59 +18,54 @@ npm install universal-ledger-agent --save
 ## Usage
 
 
-### Full implementation guide (recommended)
 
-In order to implement all available ULA plugins for the Holder in your Typescript application, please consult the [full implementation guide](docs/Integration.md).
+### Mobile app
 
-### Initializing ULA with one plugin (example)
-To illustrate the usage of the ULA we will install one Holder plugin: `ula-process-eth-barcode`. 
+In order to implement all [official ULA plugins](docs/plugins-list.md) for the Holder in your mobile app, follow these steps:
 
+Run these commands in your project:
 ```bash
+npm install universal-ledger-agent --save
+npm install vp-toolkit --save
+npm install crypt-util --save
 npm install ula-process-eth-barcode --save
+npm install ula-vp-controller --save
+npm install ula-vc-data-management --save
 ```
 
-The process-eth-barcode plugin accepts messages of which the type matches the type `ethereum-qr`. The ULA and plugin can then be used as follows:
-
+Introduce this code to initialize the ULA with all plugins:
 ```typescript
+import { LocalCryptUtils } from 'crypt-util'
+import { VpController } from 'ula-vp-controller'
+import { VcDataManagement } from 'ula-vc-data-management'
 import { ProcessEthBarcode } from 'ula-process-eth-barcode'
-import { 
-  BrowserHttpService, 
-  EventHandler, 
-  UlaResponse 
-} from 'universal-ledger-agent'
+import { EventHandler, UlaResponse } from 'universal-ledger-agent'
 
-// The process-eth-barcode plugin will need a http-service to send outgoing
-// messages via http. This http-service is provided by the ULA
+// Make sure to generate 
+const privateMasterKey = 'xprv9s21ZrQH143K4Hahxy3chUqrrHbCynU5CcnRg9xijCvCG4f3AJb1PgiaXpjik6pDnT1qRmf3V3rzn26UNMWDjfEpUKL4ouy6t5ZVa4GAJVG'
+const cryptUtil = new LocalCryptUtils()
+cryptUtil.importMasterPrivateKey(privateMasterKey)
 
-const httpService = new BrowserHttpService()
-const processEthBarCode = new ProcessEthBarcode(httpService)
+// Plugins
+const processQrCodePlugin = new ProcessEthBarcode()
+const vpControllerPlugin = new VpController(cryptUtil)
+const vcDataMgmtPlugin = new VcDataManagement()
 
-// Create an array of plugins  
-const plugins = [ processEthBarCode ]
+const plugins = [
+  vcDataMgmtPlugin,
+  vpControllerPlugin,
+  processQrCodePlugin
+]
 
-// Initialize the ULA with the plugins
-
+// ULA
 const eventHandler = new EventHandler(plugins)
 
-// A QR-Code contains e.g. the following message
-
-const message = {
-  type: "ethereum-qr",
-  url: "https://the.issuer.com/ssif/sesion/e6c2c3e6-33b2-471f-875d-14f18917958c"
-}
-
-// the QR-code is captured by a camera device and then offered to
-// the ULA. The 'callback' mechanism is used to retrieve information
-// back from the plugin (or plugins) that handled the message
-
-eventHandler.processMsg(message, callback)
-
-// The callback function is called with an UlaResponse parameter, but
-// this callback is only used when the ula-vp-controller plugin is installed!
-
-const callback = function(response: UlaResponse) {
+// Call the ULA
+function callUla(payload: any) {
+eventHandler.processMsg(payload, (response: UlaResponse) => {
 	console.log('statuscode:', response.statusCode)
 	console.log('body:', response.body)
+})
 }
 ```
 
@@ -105,6 +85,9 @@ const callback = function(response: UlaResponse) {
 
 eventHandler.processMsg(message, callback)
 ```
+
+## Create your own ULA plugins
+Please read [creating-plugins.md](docs/creating-plugins.md)
 
 ## Running tests
 

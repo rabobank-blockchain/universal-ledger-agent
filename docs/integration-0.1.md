@@ -1,6 +1,7 @@
-# Integration
+# Integration for v0.1.x
 
 the ULA and plugins can be used to help implement an issuer, verifier and/or an holder. This document describes with examples how to integrate the ULA and plugin in an example app (the holder).
+**This integration guide is only for version 0.1 of all official plugins stated in the [plugin list](plugins-list.md).**
 
 ## Example implementation of the holder app
 
