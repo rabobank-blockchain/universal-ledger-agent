@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -139,7 +139,7 @@ export class Transaction {
   }
 
   /**
-   * Converts a this object to a json string
+   * Converts a this object to a json object
    * @return object
    */
   public toJSON (): object {

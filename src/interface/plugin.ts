@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
   * Every plugin must implement this interface
   */
 import { EventHandler } from '../event-handler'
-import { Message } from '..'
+import { UlaMessage, UlaCallback } from '..'
 
 export interface Plugin {
   /**
@@ -37,10 +37,10 @@ export interface Plugin {
   /**
    * This method is called when the EventHandler received a message.
    * The message is broadcasted, so the plugin must match the 'type' field
-   * in the Message.
-   * @param message
-   * @param callback
+   * in the UlaMessage.
+   * @param message - the received message from the ULA
+   * @param callback - your callback function to listen for results
    * @returns string - the statuscode
    */
-  handleEvent (message: Message, callback: any): Promise<string>
+  handleEvent (message: UlaMessage, callback: UlaCallback): Promise<string>
 }

@@ -1,6 +1,5 @@
-"use strict";
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// Commented because enums are only supported for TS > v2.4
-/*
-export enum EventResponseType {
-  Ignored = 'ignored',
-  Completed = 'completed'
-}
 
-export default EventResponseType
-*/
-//# sourceMappingURL=event-response-type.js.map
+import { UlaResponse } from '..'
+
+export type UlaCallback = (response: UlaResponse) => any

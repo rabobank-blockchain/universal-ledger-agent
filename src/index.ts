@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ export { EventHandler } from './event-handler'
 
 export { HttpHandler } from './http-handler'
 
-export { Message } from './model/message'
+export { UlaMessage, Message } from './model/ula-message'
 
 export { IAttestation, Attestation } from './model/attestation'
 
@@ -28,10 +28,16 @@ export { ITransaction, Transaction } from './model/transaction'
 
 export { IUlaResponse, UlaResponse } from './model/ula-response'
 
+export { PluginResult } from './model/plugin-result'
+
+export { UlaError } from './model/ula-error'
+
 export { Plugin } from './interface/plugin'
 
 export { HttpService } from './interface/http-service'
 
+export { UlaCallback } from './interface/ula-callback'
+
 export { BrowserHttpService } from './service/browser-http-service'
 
-// export { EventResponseType } from './enum/EventResponseType'
+export { GenericStatusCode } from './interface/generic-status-code'

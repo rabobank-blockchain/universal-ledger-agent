@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,12 @@
 
 import { EventHandler } from '.'
 
+/**
+ * @deprecated Please use the EventHandler
+ * Incase your request is a string, parse it
+ * before calling the EventHandler.
+ * @see https://github.com/rabobank-blockchain/universal-ledger-agent/issues/11
+ */
 export class HttpHandler {
 
   constructor (private eventHandler: EventHandler) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,9 @@
 import { classToPlain, Expose } from 'class-transformer'
 
 export interface IUlaResponse {
-  statusCode: number
-  body: object
+  statusCode: any
+  body: any
+  error?: Error
 }
 
 /**
@@ -27,20 +28,22 @@ export interface IUlaResponse {
  * a statuscode and a dynamic body.
  */
 export class UlaResponse {
-  private readonly _statusCode: number
+  private readonly _statusCode: any
   private readonly _body: any
+  private readonly _error?: Error
 
   constructor (ulaResponse: IUlaResponse) {
     this._statusCode = ulaResponse.statusCode
     this._body = ulaResponse.body
+    this._error = ulaResponse.error
   }
 
   /**
-   * (HTTP) Status code
+   * Status code
    * @return any
    */
   @Expose()
-  public get statusCode (): number {
+  public get statusCode (): any {
     return this._statusCode
   }
 
@@ -54,10 +57,26 @@ export class UlaResponse {
   }
 
   /**
-   * Converts a this object to a json string
+   * (Optional) error
+   * @return Error|undefined
+   */
+  @Expose()
+  public get error (): Error | undefined {
+    return this._error
+  }
+
+  /**
+   * Converts a this object to a json object
+   * NOTE: Some properties of the Error might
+   *       be lost after serializing.
    * @return object
    */
   public toJSON (): object {
-    return classToPlain(this, { excludePrefixes: ['_'] })
+    const plainObject = classToPlain(this, { excludePrefixes: ['_'] }) as any
+    plainObject.error = this._error ? {
+      message: this._error.message,
+      stack: this._error.stack
+    } : undefined
+    return plainObject as object
   }
 }

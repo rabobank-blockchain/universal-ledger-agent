@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,23 @@
  * limitations under the License.
  */
 
- // Commented because enums are only supported for TS > v2.4
-/*
-export enum EventResponseType {
+export enum GenericStatusCode {
+  /**
+   * In case your plugin ignored
+   * the incoming message.
+   */
   Ignored = 'ignored',
-  Completed = 'completed'
-}
 
-export default EventResponseType
-*/
+  /**
+   * Generic, unknown error
+   * Please use a more specific
+   * error code in your plugin!
+   */
+  Error = 'error',
+
+  /**
+   * Use this code once your plugin
+   * successfully finished its work.
+   */
+  Success = 'success'
+}

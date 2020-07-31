@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,30 +18,34 @@ import { assert } from 'chai'
 import { UlaResponse } from '../../../src'
 
 const testData = {
-  statusCode: 200,
+  statusCode: 'some-status-code',
   body: {
     canBeAnything: 'anything'
-  } as object
+  },
+  error: new Error('Something went wrong!')
 }
 
 describe('UlaResponse constructor', function () {
 
   it('should not throw on valid inputs', () => {
-    let prep = Object.assign({}, testData)
-
     const createSut = () => {
-      return new UlaResponse(prep)
+      return new UlaResponse(testData)
     }
 
     createSut()
     assert.doesNotThrow(createSut)
   })
 
-  it('should convert a JSON object to a Proof class', () => {
+  it('should convert a JSON object to a UlaResponse class', () => {
     const sut1 = new UlaResponse(testData)
     const jsonObj = JSON.parse(JSON.stringify(sut1))
-    let sut2 = new UlaResponse(jsonObj)
-    assert.deepEqual(sut1, sut2)
+    const sut2 = new UlaResponse(jsonObj)
+    assert.strictEqual(sut1.statusCode, sut2.statusCode)
+    assert.deepEqual(sut1.body, sut2.body)
+    // @ts-ignore
+    assert.equal(sut1.error.message, sut2.error.message)
+    // @ts-ignore
+    assert.equal(sut1.error.stack, sut2.error.stack)
   })
 
 })

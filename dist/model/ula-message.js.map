@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "ula-message.js",
+  "sourceRoot": "",
+  "sources": [
+    "../../src/model/ula-message.ts"
+  ],
+  "names": [],
+  "mappings": ";AAAA;;;;;;;;;;;;;;GAcG;;;AAEH;;;;;;;GAOG;AACH,MAAa,UAAU;IAGrB,YAAa,GAAQ;QACnB,IAAI,CAAC,GAAG,CAAC,IAAI,EAAE;YACb,MAAM,IAAI,cAAc,CAAC,uBAAuB,CAAC,CAAA;SAClD;QAED,IAAI,CAAC,IAAI,GAAG,GAAG,CAAA;IACjB,CAAC;IAED;;;OAGG;IACH,IAAW,UAAU;QACnB,OAAO,IAAI,CAAC,IAAI,CAAA;IAClB,CAAC;IAED;;;OAGG;IACI,MAAM;QACX,OAAO,IAAI,CAAC,IAAI,CAAA;IAClB,CAAC;CAEF;AA3BD,gCA2BC;AAED;;;GAGG;AACH,MAAa,OAAQ,SAAQ,UAAU;CAEtC;AAFD,0BAEC"
+}

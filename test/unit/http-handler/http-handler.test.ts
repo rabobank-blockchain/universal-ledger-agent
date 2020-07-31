@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,74 +14,53 @@
  * limitations under the License.
  */
 
-import { assert } from 'chai'
 import { describe, it } from 'mocha'
 
-import { EventHandler, HttpHandler, Message } from '../../../src'
+// noinspection JSDeprecatedSymbols
+import { EventHandler, HttpHandler } from '../../../src'
 import { TestPlugin } from '../../mocks/test-plugin'
+import * as sinon from 'sinon'
+import * as chai from 'chai'
+import * as sinonChai from 'sinon-chai'
 
-describe('Test HttpHandler functionality', () => {
-  it('httpHandler object exists', () => {
-    // Arrange
-    const testPlugin = new TestPlugin()
-    const eventHandler = new EventHandler([testPlugin])
+before(() => {
+  chai.should()
+  chai.use(sinonChai)
+})
 
-    // Act
-    const httpHandler = new HttpHandler(eventHandler)
+describe('HttpHandler', () => {
+  const testPlugin = new TestPlugin()
+  const eventHandler = new EventHandler([testPlugin])
+  const ulaMessage = {
+    type: 'test',
+    dude: 'is it working?'
+  }
 
-    // Assert
-    assert.exists(httpHandler)
+  afterEach(() => {
+    sinon.restore()
   })
 
-  it('Broadcast known message in json format', async () => {
+  it('parses a string request before calling the EventHandler', async () => {
     // Arrange
-    const testPlugin = new TestPlugin()
-    const eventHandler = new EventHandler([testPlugin])
-    const httpHandler = new HttpHandler(eventHandler)
-    const message = {
-      type: 'did:test:AS1503982FDRERZDB;spec/test/1.0/this',
-      dude: 'is it working?'
-    }
+    // noinspection JSDeprecatedSymbols
+    const sut = new HttpHandler(eventHandler)
+    const eventHandlerStub = sinon.stub(eventHandler, 'processMsg')
     // Act
-    await httpHandler.handleRequest(message, (response: any) => {
-      // Assert
-      assert.equal(response.statusCode, 200)
-      assert.equal(response.body.dude, 'It is working!')
+    await sut.handleRequest(JSON.stringify(ulaMessage), () => {
+      // Do nothing
     })
+    eventHandlerStub.should.have.been.calledOnceWith(ulaMessage)
   })
 
-  it('Broadcast known message in jsonString format', async () => {
+  it('calls the EventHandler properly', async () => {
     // Arrange
-    const testPlugin = new TestPlugin()
-    const eventHandler = new EventHandler([testPlugin])
-    const httpHandler = new HttpHandler(eventHandler)
-    const message = {
-      type: 'did:test:AS1503982FDRERZDB;spec/test/1.0/this',
-      dude: 'is it working?'
-    }
-    const messageObject = new Message(message)
-
+    // noinspection JSDeprecatedSymbols
+    const sut = new HttpHandler(eventHandler)
+    const eventHandlerStub = sinon.stub(eventHandler, 'processMsg')
     // Act
-    await httpHandler.handleRequest(JSON.stringify(messageObject), (response: any) => {
-      // Assert
-      assert.equal(response.statusCode, 200)
-      assert.equal(response.body.dude, 'It is working!')
+    await sut.handleRequest(ulaMessage, () => {
+      // Do nothing
     })
-  })
-
-  it('Broadcast unknown message', async () => {
-    // Arrange
-    const testPlugin = new TestPlugin()
-    const eventHandler = new EventHandler([testPlugin])
-    const httpHandler = new HttpHandler(eventHandler)
-    const message = {
-      type: 'did:test:AS1503982FDRERZDB;spec/test/2.0/this',
-      dude: 'is it working?'
-    }
-    // Act
-    await httpHandler.handleRequest(message, () => {
-      // Assert
-      assert.fail()
-    })
+    eventHandlerStub.should.have.been.calledOnceWith(ulaMessage)
   })
 })

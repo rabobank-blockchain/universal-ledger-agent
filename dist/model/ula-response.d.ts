@@ -1,6 +1,7 @@
 export interface IUlaResponse {
-    statusCode: number;
-    body: object;
+    statusCode: any;
+    body: any;
+    error?: Error;
 }
 /**
  * UlaResponse object is sent back to the caller
@@ -10,19 +11,27 @@ export interface IUlaResponse {
 export declare class UlaResponse {
     private readonly _statusCode;
     private readonly _body;
+    private readonly _error?;
     constructor(ulaResponse: IUlaResponse);
     /**
-     * (HTTP) Status code
+     * Status code
      * @return any
      */
-    readonly statusCode: number;
+    get statusCode(): any;
     /**
      * The dynamic body
      * @return any
      */
-    readonly body: any;
+    get body(): any;
     /**
-     * Converts a this object to a json string
+     * (Optional) error
+     * @return Error|undefined
+     */
+    get error(): Error | undefined;
+    /**
+     * Converts a this object to a json object
+     * NOTE: Some properties of the Error might
+     *       be lost after serializing.
      * @return object
      */
     toJSON(): object;

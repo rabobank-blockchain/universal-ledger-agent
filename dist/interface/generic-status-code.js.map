@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "generic-status-code.js",
+  "sourceRoot": "",
+  "sources": [
+    "../../src/interface/generic-status-code.ts"
+  ],
+  "names": [],
+  "mappings": ";AAAA;;;;;;;;;;;;;;GAcG;;;AAEH,IAAY,iBAmBX;AAnBD,WAAY,iBAAiB;IAC3B;;;OAGG;IACH,wCAAmB,CAAA;IAEnB;;;;OAIG;IACH,oCAAe,CAAA;IAEf;;;OAGG;IACH,wCAAmB,CAAA;AACrB,CAAC,EAnBW,iBAAiB,GAAjB,yBAAiB,KAAjB,yBAAiB,QAmB5B"
+}

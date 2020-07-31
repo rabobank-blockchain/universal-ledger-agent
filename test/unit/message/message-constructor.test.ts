@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,20 @@
  */
 
 import { assert } from 'chai'
-import { Message } from '../../../src'
+import { UlaMessage } from '../../../src'
 
 const testData = {
   type: 'typeOfMessage',
   canBeAnything: { 'any': 'thing' }
 }
 
-describe('Message constructor', function () {
+describe('UlaMessage constructor', function () {
   it('should not accept empty type field', () => {
     let prep = Object.assign({}, testData)
     prep.type = ''
 
     const createSut = () => {
-      return new Message(prep)
+      return new UlaMessage(prep)
     }
 
     assert.throws(createSut, ReferenceError, 'Type field is missing')
@@ -38,17 +38,17 @@ describe('Message constructor', function () {
     let prep = Object.assign({}, testData)
 
     const createSut = () => {
-      return new Message(prep)
+      return new UlaMessage(prep)
     }
 
     createSut()
     assert.doesNotThrow(createSut)
   })
 
-  it('should convert a JSON object to a Proof class', () => {
-    const sut1 = new Message(testData)
+  it('should convert a JSON object to a UlaMessage class', () => {
+    const sut1 = new UlaMessage(testData)
     const jsonObj = JSON.parse(JSON.stringify(sut1))
-    const sut2 = new Message(jsonObj)
+    const sut2 = new UlaMessage(jsonObj)
 
     assert.deepEqual(sut1, sut2)
   })

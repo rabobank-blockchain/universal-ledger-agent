@@ -2,25 +2,6 @@
 
 the ULA and plugins can be used to help implement an issuer, verifier and/or an holder. This document describes with examples how to integrate the ULA and plugin in an example app (the holder).
 
-## Component usage
-
-Currently the following components are provided. Some components can be used for the issuer and verifier, while others are more suited to use in the holder. The table below gives an overview where each component currently is used: 
-
-Component | Used in Issuer | Used in Holder | Used in Verifier
-:--- | :---: | :---: | :---: |
-`universal-ledger-agent` | √ | √ | √ | 
-`ula-vc-data-management` | - | √ | - |
-`ula-process-barcode` | - | √ | - |
-`ula-vp-controller` | - | √ | - |
-`vp-toolkit` | √ | √ | √ | √ | 
-`vp-toolkit-models` | √ | √ | √ |
-`vc-status-registry` | √ | - | √ |
-`crypt-utils` | √ | √ | √ |
-
-The components starting with `ula-` are ula-plugins that can be plugged in to the `universal-ledger-agent`. 
-
-The components `vp-toolkit`, `vp-toolkit-models`, `vc-status-registry` and `crypt-utils` are used to setup the ula-plugins. They can also be used standalone.
-
 ## Example implementation of the holder app
 
 The end-goal is to enrich your application's interoperability by adding the `universal-ledger-agent`, configured with a set of components that we want to use.
@@ -49,7 +30,7 @@ The plugins at their turn are configured with elements from:
 npm install universal-ledger-agent --save
 npm install vp-toolkit --save
 npm install crypt-util --save
-npm install ula-process-barcode --save
+npm install ula-process-eth-barcode --save
 npm install ula-vp-controller --save
 npm install ula-vc-data-management --save
 ```

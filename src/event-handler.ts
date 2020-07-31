@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Coöperatieve Rabobank U.A.
+ * Copyright 2020 Coöperatieve Rabobank U.A.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { Message, Plugin } from '.'
+import { UlaMessage, Plugin, UlaCallback, UlaError, UlaResponse } from '.'
+import { PluginResult } from './model/plugin-result'
 
 export class EventHandler {
   private enabledPlugins: Plugin[] = []
@@ -33,16 +34,19 @@ export class EventHandler {
    * @param jsonObject
    * @param callback
    */
-  async processMsg (jsonObject: any, callback: any) {
-    const promises: Promise<void>[] = []
+  async processMsg (jsonObject: any, callback: UlaCallback) {
+    const promises: Promise<PluginResult>[] = []
     // Broadcast the event
     for (const plugin of this.enabledPlugins) {
-      promises.push(new Promise(async (resolve, reject) => {
+      promises.push(new Promise(async (resolve) => {
+        let statusCode: string = 'unknown'
         try {
-          await plugin.handleEvent(new Message(jsonObject), callback)
-          resolve()
+          statusCode = await plugin.handleEvent(new UlaMessage(jsonObject), callback)
         } catch (err) {
-          reject(err)
+          statusCode = err instanceof UlaError ? err.statusCode : 'error' // Unknown error
+          callback(new UlaResponse({ statusCode, body: {}, error: err }))
+        } finally {
+          resolve(new PluginResult(plugin.name, statusCode))
         }
       }))
     }
