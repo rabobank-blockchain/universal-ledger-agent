@@ -70,7 +70,7 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "uuid": "^3.4.0"
   }
 }
