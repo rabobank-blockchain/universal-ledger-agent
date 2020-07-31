@@ -19,9 +19,27 @@
 - Refactored HttpService and HttpHandler tests
 - Stryker score back to 100 (stable)
 - Improved documentation
-- Dependency patch upgrades:
+- Dependency upgrades:
   - class-transformer: 0.2.3 to 0.3.1
   - uuid: 3.3.3 to 3.4.0
+- DevDependency upgrades:
+  - @stryker-mutator/core: 2.4.0 to 2.5.0
+  - @stryker-mutator/html-reporter: 2.4.0 to 2.5.0
+  - @stryker-mutator/mocha-runner: 2.4.0 to 2.5.0
+  - @stryker-mutator/typescript: 2.4.0 to 2.5.0
+  - @types/chai: 4.2.7 to 4.2.12
+  - @types/chai-as-promised: 7.1.2 to 7.1.3
+  - @types/sinon: 7.5.1 to 7.5.2
+  - @types/sinon-chai: 3.2.3 to 3.2.4
+  - @types/uuid: 3.4.6 to 3.4.9
+  - fetch-mock: 8.3.1 to 8.3.2
+  - mocha: 7.0.0 to 7.2.0
+  - nyc: 15.0.0 to 15.1.0
+  - sinon: 8.0.4 to 8.1.1
+  - sinon-chai: 3.4.0 to 3.5.0
+  - source-map-support: 0.5.16 to 0.5.19
+  - ts-node: 8.5.4 to 8.10.2
+  - typescript: 3.4.5 to 3.9.7
 
 # 0.1.3 / 23-03-2020
 
