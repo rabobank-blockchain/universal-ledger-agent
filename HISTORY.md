@@ -19,7 +19,9 @@
 - Refactored HttpService and HttpHandler tests
 - Stryker score back to 100 (stable)
 - Improved documentation
-- Security patches updates for dependent packages
+- Dependency patch upgrades:
+  - class-transformer: 0.2.3 to 0.3.1
+  - uuid: 3.3.3 to 3.4.0
 
 # 0.1.3 / 23-03-2020
 
